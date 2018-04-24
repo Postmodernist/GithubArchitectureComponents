@@ -59,7 +59,7 @@ public class UserRepository {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         Log.e("TAG", "DATA REFRESHED FROM NETWORK");
-                        Toast.makeText(App.context, "Data refreshed from network !", Toast.LENGTH_LONG).show();
+                        Toast.makeText(App.contextRef.get(), "Data refreshed from network !", Toast.LENGTH_LONG).show();
                         executor.execute(() -> {
                             User user = response.body();
                             user.setLastRefresh(new Date());

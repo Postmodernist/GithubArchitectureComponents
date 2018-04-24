@@ -8,30 +8,26 @@ import com.boisneyphilippe.githubarchitecturecomponents.repositories.UserReposit
 
 import javax.inject.Inject;
 
-/**
- * Created by Philippe on 02/03/2018.
- */
-
 public class UserProfileViewModel extends ViewModel {
 
-    private LiveData<User> user;
-    private UserRepository userRepo;
+  private LiveData<User> user;
+  private UserRepository userRepo;
 
-    @Inject
-    public UserProfileViewModel(UserRepository userRepo) {
-        this.userRepo = userRepo;
+  @Inject
+  UserProfileViewModel(UserRepository userRepo) {
+    this.userRepo = userRepo;
+  }
+
+  // ----
+
+  public void init(String userId) {
+    if (this.user != null) {
+      return;
     }
+    user = userRepo.getUser(userId);
+  }
 
-    // ----
-
-    public void init(String userId) {
-        if (this.user != null) {
-            return;
-        }
-        user = userRepo.getUser(userId);
-    }
-
-    public LiveData<User> getUser() {
-        return this.user;
-    }
+  public LiveData<User> getUser() {
+    return this.user;
+  }
 }

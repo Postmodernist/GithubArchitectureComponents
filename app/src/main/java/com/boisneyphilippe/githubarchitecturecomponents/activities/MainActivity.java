@@ -1,8 +1,8 @@
 package com.boisneyphilippe.githubarchitecturecomponents.activities;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.boisneyphilippe.githubarchitecturecomponents.R;
 import com.boisneyphilippe.githubarchitecturecomponents.fragments.UserProfileFragment;
@@ -10,49 +10,48 @@ import com.boisneyphilippe.githubarchitecturecomponents.fragments.UserProfileFra
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
-import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
 public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
-    @Inject
-    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+  private static final String USER_LOGIN = "JakeWharton";
 
-    private static String USER_LOGIN = "JakeWharton";
+  @Inject
+  DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    this.configureDagger();
+    this.showFragment(savedInstanceState);
+  }
 
-        this.configureDagger();
-        this.showFragment(savedInstanceState);
+  @Override
+  public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
+    return dispatchingAndroidInjector;
+  }
+
+  // ---
+
+  private void showFragment(Bundle savedInstanceState) {
+    if (savedInstanceState != null) {
+      return;
     }
 
-    @Override
-    public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
-        return dispatchingAndroidInjector;
-    }
+    UserProfileFragment fragment = new UserProfileFragment();
 
-    // ---
+    Bundle bundle = new Bundle();
+    bundle.putString(UserProfileFragment.UID_KEY, USER_LOGIN);
+    fragment.setArguments(bundle);
 
-    private void showFragment(Bundle savedInstanceState){
-        if (savedInstanceState == null) {
+    getSupportFragmentManager().beginTransaction()
+        .add(R.id.fragment_container, fragment)
+        .commit();
+  }
 
-            UserProfileFragment fragment = new UserProfileFragment();
-
-            Bundle bundle = new Bundle();
-            bundle.putString(UserProfileFragment.UID_KEY, USER_LOGIN);
-            fragment.setArguments(bundle);
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, fragment, null)
-                    .commit();
-        }
-    }
-
-    private void configureDagger(){
-        AndroidInjection.inject(this);
-    }
+  private void configureDagger() {
+    AndroidInjection.inject(this);
+  }
 }
