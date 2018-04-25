@@ -56,8 +56,6 @@ public class User {
     this.lastRefresh = lastRefresh;
   }
 
-  // --- GETTERS ---
-
   @NonNull
   public String getId() {
     return id;
@@ -86,8 +84,6 @@ public class User {
   public String getLogin() {
     return login;
   }
-
-  // --- SETTERS ---
 
   public void setLogin(String login) {
     this.login = login;

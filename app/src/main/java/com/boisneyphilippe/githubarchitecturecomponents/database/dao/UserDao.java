@@ -11,19 +11,15 @@ import java.util.Date;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
-/**
- * Created by Philippe on 02/03/2018.
- */
-
 @Dao
 public interface UserDao {
 
-    @Insert(onConflict = REPLACE)
-    void save(User user);
+  @Insert(onConflict = REPLACE)
+  void save(User user);
 
-    @Query("SELECT * FROM user WHERE login = :userLogin")
-    LiveData<User> load(String userLogin);
+  @Query("SELECT * FROM user WHERE login = :userLogin")
+  LiveData<User> load(String userLogin);
 
-    @Query("SELECT * FROM user WHERE login = :userLogin AND lastRefresh > :lastRefreshMax LIMIT 1")
-    User hasUser(String userLogin, Date lastRefreshMax);
+  @Query("SELECT * FROM user WHERE login = :userLogin AND lastRefresh > :lastRefreshMax LIMIT 1")
+  User hasUser(String userLogin, Date lastRefreshMax);
 }

@@ -26,13 +26,11 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class UserProfileFragment extends Fragment {
 
-  // FOR DATA
   public static final String UID_KEY = "uid";
 
   @Inject
   ViewModelProvider.Factory viewModelFactory;
 
-  // FOR DESIGN
   @BindView(R.id.fragment_user_profile_image)
   ImageView imageView;
   @BindView(R.id.fragment_user_profile_username)

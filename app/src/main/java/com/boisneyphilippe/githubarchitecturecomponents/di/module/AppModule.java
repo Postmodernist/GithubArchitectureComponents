@@ -20,59 +20,56 @@ import dagger.Provides;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by Philippe on 02/03/2018.
- */
-
 @Module(includes = ViewModelModule.class)
 public class AppModule {
 
-    // --- DATABASE INJECTION ---
+  // --- DATABASE INJECTION ---
 
-    @Provides
-    @Singleton
-    MyDatabase provideDatabase(Application application) {
-        return Room.databaseBuilder(application,
-                MyDatabase.class, "MyDatabase.db")
-                .build();
-    }
+  private static final String BASE_URL = "https://api.github.com/";
 
-    @Provides
-    @Singleton
-    UserDao provideUserDao(MyDatabase database) { return database.userDao(); }
+  @Provides
+  @Singleton
+  MyDatabase provideDatabase(Application application) {
+    return Room.databaseBuilder(application, MyDatabase.class, "MyDatabase.db").build();
+  }
 
-    // --- REPOSITORY INJECTION ---
+  // --- REPOSITORY INJECTION ---
 
-    @Provides
-    Executor provideExecutor() {
-        return Executors.newSingleThreadExecutor();
-    }
+  @Provides
+  @Singleton
+  UserDao provideUserDao(MyDatabase database) {
+    return database.userDao();
+  }
 
-    @Provides
-    @Singleton
-    UserRepository provideUserRepository(UserWebservice webservice, UserDao userDao, Executor executor) {
-        return new UserRepository(webservice, userDao, executor);
-    }
+  @Provides
+  Executor provideExecutor() {
+    return Executors.newSingleThreadExecutor();
+  }
 
-    // --- NETWORK INJECTION ---
+  // --- NETWORK INJECTION ---
 
-    private static String BASE_URL = "https://api.github.com/";
+  @Provides
+  @Singleton
+  UserRepository provideUserRepository(UserWebservice webservice, UserDao userDao, Executor executor) {
+    return new UserRepository(webservice, userDao, executor);
+  }
 
-    @Provides
-    Gson provideGson() { return new GsonBuilder().create(); }
+  @Provides
+  Gson provideGson() {
+    return new GsonBuilder().create();
+  }
 
-    @Provides
-    Retrofit provideRetrofit(Gson gson) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(BASE_URL)
-                .build();
-        return retrofit;
-    }
+  @Provides
+  Retrofit provideRetrofit(Gson gson) {
+    return new Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .baseUrl(BASE_URL)
+        .build();
+  }
 
-    @Provides
-    @Singleton
-    UserWebservice provideApiWebservice(Retrofit restAdapter) {
-        return restAdapter.create(UserWebservice.class);
-    }
+  @Provides
+  @Singleton
+  UserWebservice provideApiWebservice(Retrofit restAdapter) {
+    return restAdapter.create(UserWebservice.class);
+  }
 }

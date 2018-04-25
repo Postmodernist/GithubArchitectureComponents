@@ -5,12 +5,8 @@ import com.boisneyphilippe.githubarchitecturecomponents.fragments.UserProfileFra
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
-/**
- * Created by Philippe on 02/03/2018.
- */
-
 @Module
 public abstract class FragmentModule {
-    @ContributesAndroidInjector
-    abstract UserProfileFragment contributeUserProfileFragment();
+  @ContributesAndroidInjector
+  abstract UserProfileFragment contributeUserProfileFragment();
 }

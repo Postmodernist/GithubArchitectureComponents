@@ -10,14 +10,10 @@ import java.lang.annotation.Target;
 
 import dagger.MapKey;
 
-/**
- * Created by Philippe on 02/03/2018.
- */
-
 @Documented
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @MapKey
 public @interface ViewModelKey {
-    Class<? extends ViewModel> value();
+  Class<? extends ViewModel> value();
 }
