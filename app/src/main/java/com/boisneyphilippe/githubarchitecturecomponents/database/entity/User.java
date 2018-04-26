@@ -1,6 +1,7 @@
 package com.boisneyphilippe.githubarchitecturecomponents.database.entity;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -45,6 +46,7 @@ public class User {
   public User() {
   }
 
+  @Ignore
   public User(@NonNull String id, String login, String avatar_url, String name, String company,
               String blog, Date lastRefresh) {
     this.id = id;

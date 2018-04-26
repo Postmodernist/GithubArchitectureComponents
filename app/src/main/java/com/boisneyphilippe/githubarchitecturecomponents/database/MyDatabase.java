@@ -8,7 +8,7 @@ import com.boisneyphilippe.githubarchitecturecomponents.database.converter.DateC
 import com.boisneyphilippe.githubarchitecturecomponents.database.dao.UserDao;
 import com.boisneyphilippe.githubarchitecturecomponents.database.entity.User;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {User.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class MyDatabase extends RoomDatabase {
   // --- DAO ---

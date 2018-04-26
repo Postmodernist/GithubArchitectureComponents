@@ -1,14 +1,14 @@
 package com.boisneyphilippe.githubarchitecturecomponents.repositories;
 
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.boisneyphilippe.githubarchitecturecomponents.App;
 import com.boisneyphilippe.githubarchitecturecomponents.api.UserWebservice;
-import com.boisneyphilippe.githubarchitecturecomponents.database.entity.User;
 import com.boisneyphilippe.githubarchitecturecomponents.database.dao.UserDao;
+import com.boisneyphilippe.githubarchitecturecomponents.database.entity.User;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -29,12 +29,14 @@ public class UserRepository {
   private final UserWebservice webservice;
   private final UserDao userDao;
   private final Executor executor;
+  private final Context context;
 
   @Inject
-  public UserRepository(UserWebservice webservice, UserDao userDao, Executor executor) {
+  public UserRepository(UserWebservice webservice, UserDao userDao, Executor executor, Context context) {
     this.webservice = webservice;
     this.userDao = userDao;
     this.executor = executor;
+    this.context = context;
   }
 
   // ---
@@ -56,7 +58,7 @@ public class UserRepository {
           @Override
           public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
             Log.e("TAG", "DATA REFRESHED FROM NETWORK");
-            Toast.makeText(App.contextRef.get(), "Data refreshed from network !", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Data refreshed from network !", Toast.LENGTH_LONG).show();
             executor.execute(() -> {
               User user = response.body();
               if (user != null) {

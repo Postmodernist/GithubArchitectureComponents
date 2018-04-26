@@ -2,11 +2,8 @@ package com.boisneyphilippe.githubarchitecturecomponents;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 
 import com.boisneyphilippe.githubarchitecturecomponents.di.component.DaggerAppComponent;
-
-import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
@@ -15,8 +12,6 @@ import dagger.android.HasActivityInjector;
 
 public class App extends Application implements HasActivityInjector {
 
-  public static WeakReference<Context> contextRef;
-
   @Inject
   DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
@@ -24,7 +19,6 @@ public class App extends Application implements HasActivityInjector {
   public void onCreate() {
     super.onCreate();
     this.initDagger();
-    contextRef = new WeakReference<>(getApplicationContext());
   }
 
   @Override

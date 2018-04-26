@@ -2,6 +2,7 @@ package com.boisneyphilippe.githubarchitecturecomponents.di.module;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
+import android.content.Context;
 
 import com.boisneyphilippe.githubarchitecturecomponents.api.UserWebservice;
 import com.boisneyphilippe.githubarchitecturecomponents.database.MyDatabase;
@@ -50,8 +51,14 @@ public class AppModule {
 
   @Provides
   @Singleton
-  UserRepository provideUserRepository(UserWebservice webservice, UserDao userDao, Executor executor) {
-    return new UserRepository(webservice, userDao, executor);
+  Context provideApplicationContext(Application application) {
+    return application.getApplicationContext();
+  }
+
+  @Provides
+  @Singleton
+  UserRepository provideUserRepository(UserWebservice webservice, UserDao userDao, Executor executor, Context context) {
+    return new UserRepository(webservice, userDao, executor, context);
   }
 
   @Provides
