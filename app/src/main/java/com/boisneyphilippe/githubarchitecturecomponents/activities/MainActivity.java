@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    this.configureDagger();
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    this.configureDagger();
     this.showFragment(savedInstanceState);
   }
 

@@ -2,6 +2,7 @@ package com.boisneyphilippe.githubarchitecturecomponents.fragments;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -41,6 +42,12 @@ public class UserProfileFragment extends Fragment {
   TextView website;
 
   @Override
+  public void onAttach(Context context) {
+    this.configureDagger();
+    super.onAttach(context);
+  }
+
+  @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
     ButterKnife.bind(this, view);
@@ -50,7 +57,6 @@ public class UserProfileFragment extends Fragment {
   @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    this.configureDagger();
     this.configureViewModel();
   }
 
